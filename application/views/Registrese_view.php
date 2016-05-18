@@ -1,4 +1,4 @@
-<h1>Registro :</h1>
+<h1 style="color: #FFFFE0">Registro :</h1>
 <?php echo validation_errors(); ?>
 <form action="" method="POST" >
         <HR width=100% align="center">
@@ -10,7 +10,7 @@
                <div class="col-md-6 col-sm-6 col-xs-12">
                 <form method="post">
                  <div class="form-group ">
-                  <label class="control-label requiredField" for="user">
+                  <label class="control-label requiredField" for="user" style="color: #FFFFE0; font-size: 18px">
                    Login
                    <span class="asteriskField">
                     *
@@ -24,16 +24,16 @@
                  <?php if(!isset($_SESSION['modificando'])||$_SESSION['modificando']==false){
                  echo '<div class="form-group ">';
                   echo '<label class="control-label requiredField" for="contrasena">';
-                   echo 'Contrase&ntilde;a';
+                   echo '<p style="color: #FFFFE0">Contrase&ntilde;a';
                    echo '<span class="asteriskField">';
-                   echo " *";
+                   echo " *</p>";
                    echo "</span>";
                   echo "</label>";
                     echo' <input class="form-control" id="contrasena" name="contrasena" type="password"/>';
                  echo "</div>";
                  }?>
                  <div class="form-group ">
-                  <label class="control-label requiredField" for="email">
+                  <label style="color: #FFFFE0; font-size: 18px" class="control-label requiredField" for="email">
                    Email
                    <span class="asteriskField">
                     *
@@ -44,7 +44,7 @@
                      echo $_SESSION['usuario']['Correo'];}?>"/>
                  </div>
                  <div class="form-group ">
-                  <label class="control-label requiredField" for="DNI">
+                  <label style="color: #FFFFE0; font-size: 18px" class="control-label requiredField" for="DNI">
                    DNI
                    <span class="asteriskField">
                     *
@@ -55,7 +55,7 @@
                     echo $_SESSION['usuario']['DNI'];}?>"/>
                  </div>
                  <div class="form-group ">
-                  <label class="control-label requiredField" for="nombre">
+                  <label style="color: #FFFFE0; font-size: 18px" class="control-label requiredField" for="nombre">
                    Nombre
                    <span class="asteriskField">
                     *
@@ -66,7 +66,7 @@
                     echo $_SESSION['usuario']['Nombre'];}?>" />
                  </div>
                  <div class="form-group ">
-                  <label class="control-label requiredField" for="direccion">
+                  <label style="color: #FFFFE0; font-size: 18px" class="control-label requiredField" for="direccion">
                    Direccion
                    <span class="asteriskField">
                     *
@@ -77,7 +77,7 @@
                     echo $_SESSION['usuario']['Direccion'];}?>"/>
                  </div>
                  <div class="form-group ">
-                  <label class="control-label requiredField" for="CP">
+                  <label style="color: #FFFFE0; font-size: 18px" class="control-label requiredField" for="CP">
                    Codigo Postal
                    <span class="asteriskField">
                     *
@@ -88,7 +88,7 @@
                     echo $_SESSION['usuario']['CP'];}?>"/>
                  </div>
                  <div class="form-group ">
-                   <label class="control-label requiredField" for="provincia">
+                   <label style="color: #FFFFE0; font-size: 18px" class="control-label requiredField" for="provincia">
                     Provincia
                     <span class="asteriskField">
                      *

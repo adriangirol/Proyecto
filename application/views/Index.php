@@ -50,9 +50,17 @@
             
            
             </div>
-            <div class="col-md-3"><img src="<?=  base_url()?>asset/plantilla/img/logo.png">
-                 <!--<div>Calzado de valverde del camino <br> Hecho a mano por los mejores artesanos del cuero </div>-->
-    </div></div>
+            <!--div class="col-md-3"><img src="<?=  base_url()?>asset/plantilla/img/logo.png"-->
+                 <div></div>
+            </div>
+     
+    </div>
+    <div class="row">
+    
+
+        <div class="col-md-4"><br><br><br><br><br><br><br><br></div>
+     </div>
+         
     
     <div align="center">
                      
