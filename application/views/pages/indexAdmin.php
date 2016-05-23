@@ -85,7 +85,7 @@
                 </li>
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -124,7 +124,7 @@
                          <a href="">   <i class="fa fa-bar-user-o fa-user"></i> Usuarios</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="Admin/Usuarios.php">Mostrar usuarios</a>
+                                    <a href="Admin/Mostrar.php">Mostrar usuarios</a>
                                 </li>
                                 <li>
                                     <a href="Admin/BajaUser.php">Dar de baja usuario</a>
@@ -136,7 +136,7 @@
                             <a href=""><i class="fa fa-star "></i> Productos</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="Admin/Productos.php">Mostrar productos</a>
+                                    <?php echo anchor('Admin/VerProductos','Mostrar Productos')?>
                                 </li>
                                 <li>
                                    <?php echo anchor('Admin/NewProducto','Nuevo Producto')?>

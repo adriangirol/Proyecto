@@ -21,7 +21,7 @@
                 <input class="form-control" id="name3" name="nombre" type="text" value="" />
             </div>
             <div class="form-group ">
-                <label class="control-label requiredField" for="user" style="color: #0075b0; font-size: 18px">
+                <label class="control-label requiredField" for="Categoria" style="color: #0075b0; font-size: 18px">
                     Categoria
                     <span class="asteriskField">
                         *
@@ -38,13 +38,13 @@
             <div></div>
 
             <div class="form-group ">
-                <label class="control-label requiredField" for="Precio" style="color: #0075b0; font-size: 18px">
-                    <p style="color: #0075b0">Precio
-                        <span class="asteriskField">
-                            *</p>
+                <label style="color: #0075b0; font-size: 18px" class="control-label requiredField" for="Precio">
+                    Precio
+                    <span class="asteriskField">
+                        *
                     </span>
                 </label>
-                <input class="form-control" id="contrasena" name="Precio" type="Number"/>
+                <input class="form-control" id="Precio" name="Precio" type="number" value=""/>
             </div>
 
             <div class="form-group ">
@@ -54,7 +54,7 @@
                         *
                     </span>
                 </label>
-                <input class="form-control" id="imagen" name="imagen" type="text" value=""/>
+                <input class="form-control" id="Imagen" name="Imagen" type="text" value=""/>
             </div>
             <div class="form-group ">
                 <label style="color: #0075b0; font-size: 18px" class="control-label requiredField" for="IVA">
@@ -63,7 +63,7 @@
                         *
                     </span>
                 </label>
-                <input class="form-control" id="IVA" name="IVA" type="text" value=""/>
+                <input class="form-control" id="IVA" name="IVA" type="number" value=""/>
             </div>
            
     </div>
@@ -75,7 +75,7 @@
                     *
                 </span>
             </label>
-            <input class="form-control" id="descripcion" name="descripcion" type="text" value=""/>
+            <input class="form-control" id="descripcion" name="Descripcion" type="text" value=""/>
         </div>
         <div class="form-group ">
             <label style="color: #0075b0; font-size: 18px" class="control-label requiredField" for="Stock">
@@ -87,7 +87,7 @@
             <input class="form-control" id="Stock" name="Stock" type="Number" value=""/>
         </div>
         <div class="form-group ">
-            <label style="color: #0075b0; font-size: 18px" class="control-label requiredField" for="Destacado">
+            <label style="color: #0075b0; font-size: 18px" class="control-label" for="Destacado">
                 Destacado
                 <span class="asteriskField">
                     *
@@ -95,12 +95,12 @@
             </label>
             <div class="radio">
                 <label>
-                    <input type="radio" name="destacado" id="destacado" value="S" checked>
+                    <input type="radio" name="Destacado" id="Destacado" value="S" >
                     No
                 </label>
                 &nbsp;&nbsp;&nbsp;
                 <label>
-                    <input type="radio" name="destacado" id="destacado" value="N">
+                    <input type="radio" name="Destacado" id="Destacado" value="N">
                     Si
                 </label>
             </div>

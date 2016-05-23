@@ -5,21 +5,21 @@
         
     <?php  if($numeroPedido==0){echo "No existen pedidos";}
     else{
-    foreach ($mispedidos as $pedido) : ?>
-        <?php if($pedido['Estado']=="AN")
+    foreach ($misproductos as $producto) : ?>
+        <?php if($producto['Estado']=="AN")
                 echo "<tr class='danger'>";
               else 
                   echo "<tr class='success'>"; ?>
         <!-- Aplicadas en las filas -->
          
        
-        <td>Codigo del pedido : <strong><?= $pedido['codigo_pedido']?></strong> </td>  
+        <td>Codigo del pedido : <strong><?= $producto['codigo_pedido']?></strong> </td>  
         
-        <td>Fecha : <strong><?= $pedido['fecha']?></strong></td>
+        <td>Fecha : <strong><?= $producto['fecha']?></strong></td>
         
-        <td>Estado : <strong><?= $pedido['Estado'] ?></strong></td>
-        <td><?php if($pedido['Estado']=="NP"){echo anchor("Entrada/CancelarPedido/{$pedido['codigo_pedido']}"," Anular ");}?></td>
-        <td><?php echo anchor("Entrada/ImprimirPedidoPDE/{$pedido['codigo_pedido']}","Imprimir Pdf")?>
+        <td>Estado : <strong><?= $producto['Estado'] ?></strong></td>
+        <td><?php if($producto['Estado']=="NP"){echo anchor("Entrada/CancelarPedido/{$producto['codigo_pedido']}"," Anular ");}?></td>
+        <td><?php echo anchor("Entrada/ImprimirPedidoPDE/{$producto['codigo_pedido']}","Imprimir Pdf")?>
         </tr>
        <tr><td>Datos del pedido :</td></tr>
        <tr>
@@ -29,7 +29,7 @@
            <td align="center">Importe</td>
        </tr>
        <tr>
-           <?php foreach($pedido['lineas']as $linea):?>
+           <?php foreach($producto['lineas']as $linea):?>
         
         <td align="center"><?=$linea['Nombre']?></td>
         <td align="center"><?=$linea['Cantidad']?></td>
