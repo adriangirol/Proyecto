@@ -69,7 +69,7 @@ class model_tienda extends CI_Model{
     public function Comprueba_usuario($usuario, $pass){
         
        
-        $query=$this->db->query("SELECT count(*) as 'total' FROM compradores WHERE Nombre_usuario = '".$usuario."' AND Contrasena='".$pass."';");
+        $query=$this->db->query("SELECT count(*) as 'total' FROM usuarios WHERE Nombre_usuario = '".$usuario."' AND Contrasena='".$pass."';");
         $a=$query->row();
         $a=(array)$a;
        
@@ -86,7 +86,7 @@ class model_tienda extends CI_Model{
      */
     public function traer_usuario($login){
       
-         $query=$this->db->query("SELECT *  FROM compradores WHERE Nombre_usuario = '".$login."'");
+         $query=$this->db->query("SELECT *  FROM usuarios WHERE Nombre_usuario = '".$login."'");
          
           return $query->row();
         
@@ -97,7 +97,7 @@ class model_tienda extends CI_Model{
      * @return type devuelve 1 si el usuario es repedito 0 sino lo es
      */
     public function usuarioRepetido($login){
-         $query=$this->db->query("SELECT count(*)as repetido  FROM compradores WHERE Nombre_usuario = '".$login."'");
+         $query=$this->db->query("SELECT count(*)as repetido  FROM usuarios WHERE Nombre_usuario = '".$login."'");
          
          return $query->row()->repetido;
     }
@@ -107,7 +107,7 @@ class model_tienda extends CI_Model{
      * @return type registro del codigo de usuario
      */
     public function ObtenerCodigo($login){
-        $query=$this->db->query("SELECT Codigo as codigo  FROM compradores WHERE Nombre_usuario = '".$login."'");
+        $query=$this->db->query("SELECT Codigo as codigo  FROM usuarios WHERE Nombre_usuario = '".$login."'");
          
          return $query->row()->codigo;
     }
@@ -117,7 +117,7 @@ class model_tienda extends CI_Model{
      */
     public function InsertUser($datos){
        
-       $this->db->insert('compradores',$datos);
+       $this->db->insert('usuarios',$datos);
     }
     /**
      * modifica los campos del usuario.
@@ -126,7 +126,7 @@ class model_tienda extends CI_Model{
      */
     public function ModificarUser($id,$datos){
         $this->db->where('Nombre', $id);
-        $this->db->update('compradores', $datos); 
+        $this->db->update('usuarios', $datos); 
     }
     /**
      * 

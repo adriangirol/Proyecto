@@ -9,7 +9,12 @@ class Admin extends CI_Controller {
 
     public function index() {
         $this->load->helper('url');
-        $this->load->view('pages/indexAdmin');
+        $this->load->model('Model_admin', "tienda");
+//$cuerpo=$this->load->view('pages/Bienvenida','',true);
+
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
     }
 
     public function NewProducto() {
@@ -31,7 +36,9 @@ class Admin extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $cuerpo = $this->load->view('pages/NewProducto_v', '', true);
-            $this->load->view('pages/indexAdmin', Array('cuerpo' => $cuerpo));
+            $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
         } else {
 
 
@@ -59,7 +66,9 @@ class Admin extends CI_Controller {
             
             $this->tienda->InsertProducto($datos);
             $cuerpo=$this->load->view('pages/Producto_Insertado_v','',true);
-                    $this->load->view('pages/IndexAdmin', Array('cuerpo' => $cuerpo));
+            $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
         }
         
     }
@@ -76,7 +85,48 @@ class Admin extends CI_Controller {
 //            echo"</pre>";
              
         $cuerpo= $this->load->view('pages/Mis_productos_v',Array('misproductos'=>$misproductos), true);
-        $this->load->view('pages/IndexAdmin', Array('cuerpo' => $cuerpo)); 
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
     }
+    public function MostrarUser(){
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        $misuser=$this->tienda->MisUser();
+        
+       
+          //indexamos los user para mandarlos a la vista.
+      
+//            echo "<pre>";
+//             print_r($mispedidos);
+//            echo"</pre>";
+             
+        $cuerpo= $this->load->view('pages/Mis_usuarios_v',Array('misuser'=>$misuser), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+    }
+    public function MostrarUnProducto($id){
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        $misproductos=$this->tienda->Producto($id);
+        
+       
+          //indexamos los pedidos para mandarlos a la vista.
+      
+//            echo "<pre>";
+//             print_r($mispedidos);
+//            echo"</pre>";
+             
+        $cuerpo= $this->load->view('pages/Mis_productos_v',Array('misproductos'=>$misproductos), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+    }
+    
+    
+    
+    
+    
 
 }
