@@ -132,10 +132,10 @@
                                 <a href=""><i class="fa fa-shopping-cart fa-shopping-cart"></i> Pedidos</a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="Admin/pendientes.php">Lista de pedidos pendientes</a>
+                                       <?php echo anchor('Admin/Pendientes', 'Lista de pedidos pendientes') ?>
                                     </li>
                                     <li>
-                                        <a href="Admin/Pedidos.php">Mostrar todos los pedidos</a>
+                                         <?php echo anchor('Admin/Enviados', 'Lista de pedidos enviados') ?>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
@@ -144,10 +144,10 @@
                                 <a><i class="fa fa-bookmark fa fa-object-ungroup"></i> Categorias</a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="Admin/Categorias.php">Ver todas las categorias</a>
+                                        <?php echo anchor('Admin/Categorias', 'Mostrar categorias') ?>
                                     </li>
                                     <li>
-                                        <a href="Admin/NewCategoria.php">Añadir Categoria</a>
+                                        <?php echo anchor('Admin/NewCategoria', 'Nueva categoria') ?>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

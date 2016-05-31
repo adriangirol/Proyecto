@@ -10,7 +10,7 @@ class Admin extends CI_Controller {
     public function index() {
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
-//$cuerpo=$this->load->view('pages/Bienvenida','',true);
+        $cuerpo=$this->load->view('pages/Bienvenida','',true);
 
         $misalert=$this->tienda->StockBajo();
         $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
@@ -72,6 +72,51 @@ class Admin extends CI_Controller {
         }
         
     }
+    
+    public function NewCategoria() {
+
+        $this->load->helper('url');
+        $this->load->library('form_validation');
+        $this->load->model('Model_admin', "tienda"); //modelo de la aplicacion.
+        $num=$this->tienda->Num_categoria();
+      
+        $this->form_validation->set_rules('nombre', 'nombre', 'required');
+        $this->form_validation->set_rules('Descripcion', 'Descripcion', 'required');
+        
+       
+
+
+
+        if ($this->form_validation->run() == FALSE) {
+            $cuerpo = $this->load->view('pages/NewCategoria_v', Array('num'=>$num), true);
+            $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+        } else {
+
+
+
+            //Recogemos los datos para insertar.
+            $nombre = $this->input->post('nombre');
+            
+            $Ds = $this->input->post('Descripcion');
+            
+            $cd = $this->input->post('codigo');
+            //Metemos los datos en un array para la inserccion.
+            $datos = array(
+                'Codigo'=> $num,
+                'Nombre' => $nombre,
+                'Descripcion' => $Ds,
+            );
+            
+            $this->tienda->InsertCategorias($datos);
+            $cuerpo=$this->load->view('pages/Producto_Insertado_v','',true);
+            $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+        }
+        
+    }
      public function VerProductos(){
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
@@ -125,8 +170,98 @@ class Admin extends CI_Controller {
     }
     
     
+   public function Enviados(){
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        $mispedidos=$this->tienda->PedidosEnviados();
+       
+          //indexamos los pedidos para mandarlos a la vista.
+        foreach($mispedidos as $idx=>$pedido){
+          
+          $mispedidos[$idx]['lineas']=$this->tienda->TraerLineasPedido($mispedidos[$idx]['codigo_pedido']);
+                      
+        }
+
+        $cuerpo= $this->load->view('pages/Mis_enviados_v',Array('mispedidos'=>$mispedidos), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+    }
+    public function Categorias(){
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        $miscategorias=$this->tienda->Miscategorias();
+        
+       
+          //indexamos los pedidos para mandarlos a la vista.
+      
+//            echo "<pre>";
+//             print_r($mispedidos);
+//            echo"</pre>";
+             
+        $cuerpo= $this->load->view('pages/Mis_categorias_v',Array('miscategorias'=>$miscategorias), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+    }
     
-    
+    public function Pendientes(){
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        $mispedidos=$this->tienda->PedidosPendientes();
+       
+          //indexamos los pedidos para mandarlos a la vista.
+        foreach($mispedidos as $idx=>$pedido){
+          
+          $mispedidos[$idx]['lineas']=$this->tienda->TraerLineasPedido($mispedidos[$idx]['codigo_pedido']);
+                      
+        }
+
+        $cuerpo= $this->load->view('pages/Mis_pendientes_v',Array('mispedidos'=>$mispedidos), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+    }
+    public function EnvioPedido($id){
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        
+        $this->tienda->Enviar($id);
+        $mispedidos=$this->tienda->PedidosPendientes();
+       
+          //indexamos los pedidos para mandarlos a la vista.
+        foreach($mispedidos as $idx=>$pedido){
+          
+          $mispedidos[$idx]['lineas']=$this->tienda->TraerLineasPedido($mispedidos[$idx]['codigo_pedido']);
+                      
+        }
+
+        $cuerpo= $this->load->view('pages/Mis_pendientes_v',Array('mispedidos'=>$mispedidos), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo));
+        
+    }
+    public function VolverPedido(){
+       $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
+        
+        $this->tienda->Volverpendiente($id);
+        $mispedidos=$this->tienda->PedidosEnviado();
+       
+          //indexamos los pedidos para mandarlos a la vista.
+        foreach($mispedidos as $idx=>$pedido){
+          
+          $mispedidos[$idx]['lineas']=$this->tienda->TraerLineasPedido($mispedidos[$idx]['codigo_pedido']);
+                      
+        }
+
+        $cuerpo= $this->load->view('pages/Mis_enviado_v',Array('mispedidos'=>$mispedidos), true);
+        $misalert=$this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert'=>$misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert,'cuerpo'=>$cuerpo)); 
+        
+    }
     
 
 }
