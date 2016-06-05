@@ -25,7 +25,7 @@ class model_tienda extends CI_Model{
      * @return array de productos destacados.
      */
     public function traer_destacados(){
-        $query=$this->db->query('SELECT * FROM productos WHERE Destacado="S"');
+        $query=$this->db->query('SELECT * FROM productos WHERE Destacado="S" AND Eliminado IS null OR Eliminado <> "S"');
         
         return $query->result();
     }
@@ -45,7 +45,7 @@ class model_tienda extends CI_Model{
     }
     public function traer_productos($condicion,$categoria){
         
-        $query=$this->db->query('SELECT * FROM productos WHERE '. $condicion.'='.$categoria);
+        $query=$this->db->query('SELECT * FROM productos WHERE '. $condicion.'='.$categoria.'AND Eliminado IS null OR Eliminado <> "S"');
         
         return $query->result();
     }
@@ -56,7 +56,7 @@ class model_tienda extends CI_Model{
      */
     public function Un_producto($id){
         
-        $query=$this->db->query('SELECT * FROM productos WHERE Codigo='.$id);
+        $query=$this->db->query('SELECT * FROM productos WHERE Codigo='.$id.'AND Eliminado IS null OR Eliminado <> "S"');
         
         return $query->row();
     }
@@ -69,7 +69,7 @@ class model_tienda extends CI_Model{
     public function Comprueba_usuario($usuario, $pass){
         
        
-        $query=$this->db->query("SELECT count(*) as 'total' FROM usuarios WHERE Nombre_usuario = '".$usuario."' AND Contrasena='".$pass."';");
+        $query=$this->db->query("SELECT count(*) as 'total' FROM usuarios WHERE Nombre_usuario = '".$usuario."' AND Contrasena='".$pass."' AND Borrado<>'SI' OR Borrado IS NULL;");
         $a=$query->row();
         $a=(array)$a;
        

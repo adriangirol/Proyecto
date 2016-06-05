@@ -23,7 +23,7 @@
         <td align="center"><?=$linea['Nombre']?></td>
         <td align="center"><?=$linea['Descripcion']?> </td>
         
-        <td align="center"><?= anchor("Admin/BorrarProducto/".$linea["Codigo"]."", " ", array('class' => 'btn glyphicon glyphicon-remove-sign btn-danger'))?></p></td>
+        <td align="center"><?= anchor("Admin/EstasSeguroCat/".$linea["Codigo"]."", " ", array('class' => 'btn glyphicon glyphicon-remove-sign btn-danger'))?></p></td>
         <td align="center"><?= anchor("Admin/ModificarProducto/".$linea["Codigo"]."", " ", array('class' => 'btn glyphicon glyphicon-cog btn-primary'))?></p></td>
         
        </tr>

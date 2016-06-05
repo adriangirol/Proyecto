@@ -31,7 +31,7 @@
         <td align="center"><?=$linea['DNI']?></td>
         <td align="center"><?=$linea['Borrado']?></td>
         <td align="center"><?=$linea['Tipo']?></td>
-        <td align="center"><?= anchor("Admin/BorrarUser/".$linea["Codigo"]."", " ", array('class' => 'btn glyphicon glyphicon-remove-sign btn-danger'))?></p></td>
+        <td align="center"><?= anchor("Admin/EstasSeguroUser/".$linea["Codigo"]."", " ", array('class' => 'btn glyphicon glyphicon-remove-sign btn-danger'))?></p></td>
         
         
        </tr>

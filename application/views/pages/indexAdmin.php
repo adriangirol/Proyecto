@@ -106,9 +106,7 @@
                                     <li>
                                         <?php echo anchor('Admin/MostrarUser', 'Mostrar Usuarios') ?>
                                     </li>
-                                    <li>
-                                        <a href="Admin/BajaUser.php">Dar de baja usuario</a>
-                                    </li>
+                                   
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -121,10 +119,7 @@
                                     <li>
                                         <?php echo anchor('Admin/NewProducto', 'Nuevo Producto') ?>
                                     </li>
-                                    <li>
-                                        <a href="Admin/DeleteProducto.php">Eliminar producto</a>
-                                    </li>
-
+                                    
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -132,10 +127,10 @@
                                 <a href=""><i class="fa fa-shopping-cart fa-shopping-cart"></i> Pedidos</a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                       <?php echo anchor('Admin/Pendientes', 'Lista de pedidos pendientes') ?>
+                                       <?php echo anchor('Admin/Pendientes', 'Mostrar pedidos pendientes') ?>
                                     </li>
                                     <li>
-                                         <?php echo anchor('Admin/Enviados', 'Lista de pedidos enviados') ?>
+                                         <?php echo anchor('Admin/Enviados', 'Mostrar pedidos enviados') ?>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->

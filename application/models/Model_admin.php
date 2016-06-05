@@ -24,12 +24,12 @@ class Model_admin extends CI_Model{
     }
     public function Misproductos(){
         
-         $query=$this->db->query("SELECT * FROM productos;");
+         $query=$this->db->query("SELECT * FROM productos WHERE Eliminado<>'S' OR ELiminado is NULL;");
         return $query->result_array(); 
     }
      public function MisUser(){
         
-         $query=$this->db->query("SELECT * FROM usuarios;");
+         $query=$this->db->query("SELECT * FROM usuarios WHERE Borrado is null OR Borrado<>'S';");
         return $query->result_array(); 
     }
     public function TraerLineasProducto($id){
@@ -68,7 +68,7 @@ class Model_admin extends CI_Model{
     }
      public function Miscategorias(){
         
-         $query=$this->db->query("SELECT * FROM categorias;");
+         $query=$this->db->query("SELECT * FROM categorias WHERE Oculto is NULL OR Oculto<>'S';");
         return $query->result_array(); 
     }
     public function PedidoConLineas($id){
@@ -82,8 +82,34 @@ class Model_admin extends CI_Model{
         $q='UPDATE pedidos SET Estado="EN" WHERE codigo_pedido="'.$id.'";';
         $this->db->query($q);
     }
+    public function Cancelar($id){
+        
+        $q='UPDATE pedidos SET Estado="CN" WHERE codigo_pedido="'.$id.'";';
+        $this->db->query($q);
+    }
     public function Volverpendiente($id){
         $q='UPDATE pedidos SET Estado="NP" WHERE codigo_pedido="'.$id.'";';
         $this->db->query($q);
+    }
+    public function DeleteProducto($id){
+        
+         $q='UPDATE productos SET Eliminado="S" WHERE Codigo="'.$id.'";';
+        $this->db->query($q);
+    }
+    public function DeleteUser($id){
+        
+         $q='UPDATE usuarios SET Borrado="S" WHERE Codigo='.$id.';';
+         
+        $this->db->query($q);
+    }
+    public function DeleteCat($id){
+        
+        $q='UPDATE categorias SET Oculto="S" WHERE Codigo='.$id.';';
+         
+        $this->db->query($q);
+    }
+     public function UpdatePro($id,$datos){
+        $this->db->where('Codigo', $id);
+        $this->db->update('Productos', $datos); 
     }
 }
