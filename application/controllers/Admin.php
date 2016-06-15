@@ -8,17 +8,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends CI_Controller {
 
     public function index() {
+        $_SESSION['ok'] = false;
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
-        $cuerpo = $this->load->view('pages/Bienvenida', '', true);
+        $this->load->library('form_validation');
 
-        $misalert = $this->tienda->StockBajo();
-        $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
-        $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+        $this->form_validation->set_rules('username', 'username', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('pages/login_v');
+//         
+        } else {
+            $user = $this->input->post('username');
+            $pass = $this->input->post('password');
+
+            $verificacion = $this->tienda->Admin($user, $pass);
+            if ($verificacion == true) {
+
+                $_SESSION['ok'] = true;
+                $cuerpo = $this->load->view('pages/Bienvenida', '', true);
+                $misalert = $this->tienda->StockBajo();
+                $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
+                $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+            } else {
+                $this->load->view('pages/login_v');
+            }
+        }
     }
 
     public function NewProducto() {
-
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('Model_admin', "tienda"); //modelo de la aplicacion.
@@ -73,7 +93,7 @@ class Admin extends CI_Controller {
     }
 
     public function NewCategoria() {
-
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('Model_admin', "tienda"); //modelo de la aplicacion.
@@ -117,16 +137,17 @@ class Admin extends CI_Controller {
     }
 
     public function VerProductos() {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
         $this->load->library('form_validation');
         $this->load->helper('form');
-        
+
         $this->form_validation->set_rules('id', 'id', 'required');
-        
+
         if ($this->form_validation->run() === FALSE) {
             $misproductos = $this->tienda->MisProductos();
-           
+
 
             //indexamos los pedidos para mandarlos a la vista.
 //            echo "<pre>";
@@ -142,12 +163,14 @@ class Admin extends CI_Controller {
             //y los enviamos al modelo
             $id = $this->input->post('id');
             $nombre = $this->input->post('nombre');
-            $precio=$this->input->post('precio');
-            $cat=$this->input->post('cat');
-           $this->ModificarProducto($id, $nombre, $precio, $cat);
-           
-           $misproductos = $this->tienda->MisProductos();
-           
+            $precio = $this->input->post('precio');
+            $cat = $this->input->post('cat');
+            ;
+            $stock = $this->input->post('stock');
+            $this->ModificarProducto($id, $nombre, $precio, $cat, $stock);
+
+            $misproductos = $this->tienda->MisProductos();
+
 
             //indexamos los pedidos para mandarlos a la vista.
 //            echo "<pre>";
@@ -158,12 +181,11 @@ class Admin extends CI_Controller {
             $misalert = $this->tienda->StockBajo();
             $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
             $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
-            
         }
     }
 
-
     public function MostrarUser() {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
         $misuser = $this->tienda->MisUser();
@@ -181,23 +203,51 @@ class Admin extends CI_Controller {
     }
 
     public function MostrarUnProducto($id) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
-        $misproductos = $this->tienda->Producto($id);
+        $this->load->library('form_validation');
+        $this->load->helper('form');
+
+        $this->form_validation->set_rules('id', 'id', 'required');
+
+        if ($this->form_validation->run() === FALSE) {
+            $misproductos = $this->tienda->Producto($id);
+
+            $cuerpo = $this->load->view('pages/Mis_productos_v', Array('misproductos' => $misproductos), true);
+            $misalert = $this->tienda->StockBajo();
+            $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
+            $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+        } else {
+
+            //Si la validación es correcta, cogemos los datos de la variable POST
+            //y los enviamos al modelo
+            $id2 = $this->input->post('id');
+            $nombre = $this->input->post('nombre');
+            $precio = $this->input->post('precio');
+            $cat = $this->input->post('cat');
+            ;
+            $stock = $this->input->post('stock');
+            $this->ModificarProducto($id2, $nombre, $precio, $cat, $stock);
+
+            $misproductos = $this->tienda->Producto($id2);
 
 
-        //indexamos los pedidos para mandarlos a la vista.
+            //indexamos los pedidos para mandarlos a la vista.
 //            echo "<pre>";
 //             print_r($mispedidos);
 //            echo"</pre>";
 
-        $cuerpo = $this->load->view('pages/Mis_productos_v', Array('misproductos' => $misproductos), true);
-        $misalert = $this->tienda->StockBajo();
-        $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
-        $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+            $cuerpo = $this->load->view('pages/Mis_productos_v', Array('misproductos' => $misproductos), true);
+            $misalert = $this->tienda->StockBajo();
+            $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
+            $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+        }
     }
 
     public function Enviados() {
+
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
         $mispedidos = $this->tienda->PedidosEnviados();
@@ -215,23 +265,41 @@ class Admin extends CI_Controller {
     }
 
     public function Categorias() {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
-        $miscategorias = $this->tienda->Miscategorias();
+        $this->load->library('form_validation');
+        $this->load->helper('form');
 
+        $this->form_validation->set_rules('cod', 'cod', 'required');
 
-        //indexamos los pedidos para mandarlos a la vista.
-//            echo "<pre>";
-//             print_r($mispedidos);
-//            echo"</pre>";
+        if ($this->form_validation->run() === FALSE) {
 
-        $cuerpo = $this->load->view('pages/Mis_categorias_v', Array('miscategorias' => $miscategorias), true);
-        $misalert = $this->tienda->StockBajo();
-        $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
-        $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+            $miscategorias = $this->tienda->Miscategorias();
+
+            $cuerpo = $this->load->view('pages/Mis_categorias_v', Array('miscategorias' => $miscategorias), true);
+            $misalert = $this->tienda->StockBajo();
+            $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
+            $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+        } else {
+
+            $id = $this->input->post('cod');
+            $nombre = $this->input->post('nombre');
+            $des = $this->input->post('des');
+
+            $this->ModificarCategoria($id, $nombre, $des);
+
+            $miscategorias = $this->tienda->MisCategorias();
+
+            $cuerpo = $this->load->view('pages/Mis_categorias_v', Array('miscategorias' => $miscategorias), true);
+            $misalert = $this->tienda->StockBajo();
+            $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
+            $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+        }
     }
 
     public function Pendientes() {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
         $mispedidos = $this->tienda->PedidosPendientes();
@@ -249,6 +317,7 @@ class Admin extends CI_Controller {
     }
 
     public function EnvioPedido($id) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
 
@@ -268,6 +337,7 @@ class Admin extends CI_Controller {
     }
 
     public function CancelarPedido($id) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
 
@@ -287,6 +357,7 @@ class Admin extends CI_Controller {
     }
 
     public function VolverPedido($id) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
 
@@ -306,6 +377,7 @@ class Admin extends CI_Controller {
     }
 
     public function Del_producto($confir) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
 
@@ -317,9 +389,22 @@ class Admin extends CI_Controller {
             $this->VerProductos();
         }
     }
+     public function EstasSeguroAdmin($id) {
+        $this->Autenticacion();
+        $this->load->helper('url');
+        $this->load->library('form_validation');
+        $this->load->model('Model_admin', "tienda"); //modelo de la aplicacion.
+
+        $_SESSION['id'] = $id;
+
+        $cuerpo = $this->load->view('pages/EstasSeguroAdmin', '', true);
+        $misalert = $this->tienda->StockBajo();
+        $alert = $this->load->view('pages/Alerta_stock', Array('alert' => $misalert), true);
+        $this->load->view('pages/indexAdmin', Array('alert' => $alert, 'cuerpo' => $cuerpo));
+    }
 
     public function EstasSeguroPro($id) {
-
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->library('form_validation');
         $this->load->model('Model_admin', "tienda"); //modelo de la aplicacion.
@@ -333,6 +418,7 @@ class Admin extends CI_Controller {
     }
 
     public function EstasSeguroCat($id) {
+        $this->Autenticacion();
         $this->load->helper('url');
 
         $this->load->model('Model_admin', "tienda"); //modelo de la aplicacion.
@@ -346,6 +432,7 @@ class Admin extends CI_Controller {
     }
 
     public function EstasSeguroUser($id) {
+        $this->Autenticacion();
 
         $this->load->helper('url');
 
@@ -360,6 +447,7 @@ class Admin extends CI_Controller {
     }
 
     public function Del_user($confir) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
 
@@ -373,6 +461,7 @@ class Admin extends CI_Controller {
     }
 
     public function Del_Cat($confir) {
+        $this->Autenticacion();
         $this->load->helper('url');
         $this->load->model('Model_admin', "tienda");
 
@@ -384,22 +473,61 @@ class Admin extends CI_Controller {
             $this->Categorias();
         }
     }
+     public function Pasar_Admin($confir) {
+        $this->Autenticacion();
+        $this->load->helper('url');
+        $this->load->model('Model_admin', "tienda");
 
-    
-      public function ModificarProducto($id,$nombre,$precio,$cat) {
-      
-            $this->load->model('Model_admin', "tienda");
+        if ($confir == "NO") {
+            $this->MostrarUser();
+        } else {
+            $this->tienda->Permiso_Admin($_SESSION['id']);
+            $_SESSION['id'] = false;
+            $this->MostrarUser();
+        }
+    }
 
-          $cambios=Array(
-              'Nombre'=>$nombre,
-              'Codigo'=>$id,
-              'Precio'=>$precio,
-              'Categoria_Codigo'=>$cat
-          );
-            
-        $this->tienda->UpdatePro($id,$cambios);
-     
+    public function ModificarProducto($id, $nombre, $precio, $cat, $stock) {
+        $this->Autenticacion();
+        $this->load->model('Model_admin', "tienda");
 
+        $cambios = Array(
+            'Nombre' => $nombre,
+            'Codigo' => $id,
+            'Precio' => $precio,
+            'Categoria_Codigo' => $cat,
+            'Stock' => $stock
+        );
 
-      } 
+        $this->tienda->UpdatePro($id, $cambios);
+    }
+
+    public function ModificarCategoria($id, $nombre, $des) {
+        $this->Autenticacion();
+        $this->load->model('Model_admin', "tienda");
+
+        $cambios = Array(
+            'Codigo' => $id,
+            'Nombre' => $nombre,
+            'Descripcion' => $des
+        );
+
+        $this->tienda->UpdateCat($id, $cambios);
+    }
+
+    public function Autenticacion() {
+        $this->load->helper('url');
+        if ($_SESSION['ok'] == false) {
+
+            redirect("Admin","location",301);
+        }
+    }
+    public function Salir(){
+        
+        $this->load->helper('url');
+        $_SESSION['ok'] = false;
+        redirect("Admin","location",301);
+        
+    }
+
 }

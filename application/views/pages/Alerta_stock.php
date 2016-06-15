@@ -1,6 +1,6 @@
 <li class="dropdown"> 
 <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    <a class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" href="#">Alerta de stock
         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
     </a>
     <ul class="dropdown-menu dropdown-alerts">

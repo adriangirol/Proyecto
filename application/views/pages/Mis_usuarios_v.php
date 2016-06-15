@@ -32,15 +32,19 @@
         <td align="center"><?=$linea['Borrado']?></td>
         <td align="center"><?=$linea['Tipo']?></td>
         <td align="center"><?= anchor("Admin/EstasSeguroUser/".$linea["Codigo"]."", " ", array('class' => 'btn glyphicon glyphicon-remove-sign btn-danger'))?></p></td>
-        
-        
+        <?php if($linea['Tipo']!='Admin'){
+         echo "<td align='center'><p>";
+        ECHO anchor("Admin/EstasSeguroAdmin/".$linea['Codigo']."","Administrador", array('class' => 'btn glyphicon glyphicon-star btn-success'));
+                echo"</p></td>";
+         }?>
        </tr>
        
      
 
          <?php endforeach; ?><tr>
+             
       
-        
+        <td align="center"><?= anchor("Login/RecogerDatosUser/", " Añadir Usuario", array('class' => 'btn glyphicon glyphicon-plus btn-success'))?></p></td>
         
      
      

@@ -57,24 +57,25 @@
                 <!-- /.navbar-header -->
 
                 <ul class="nav navbar-top-links navbar-right">
-                    
-                        <?php
-                            if (isset($alert)) {
-                                echo $alert;
-                            }
-                            ?>
-                        <!-- /.dropdown -->
+
+                    <?php
+                    if (isset($alert)) {
+                        echo $alert;
+                    }
+                    ?>
+                  
+                    <!-- /.dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown" data-toggle="dropdown" href="#">
+                        <a class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
+<!--                            <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil</a>
                             </li>
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Ajustes</a>
-                            </li>
+                            </li>-->
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                            <li> <?php echo anchor('Admin/Salir', ' Salir', Array('class' => 'fa fa-sign-out fa-fw')); ?>
                             </li>
                         </ul>
                         <!-- /.dropdown-user -->
@@ -86,17 +87,19 @@
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
-                            <li class="sidebar-search">
-                                <div class="input-group custom-search-form">
-                                    <input type="text" class="form-control" placeholder="Search...">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                                <!-- /input-group -->
-                            </li>
+
+                            <img src=<?= base_url() ?>asset/plantilla/img/logo.png>
+                            <!--                            <li class="sidebar-search">
+                                                            <div class="input-group custom-search-form">
+                                                                <input type="text" class="form-control" placeholder="Search...">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" type="button">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                             /input-group 
+                                                        </li>-->
                             <!--                        <li>
                                                         <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                                                     </li>-->
@@ -106,7 +109,7 @@
                                     <li>
                                         <?php echo anchor('Admin/MostrarUser', 'Mostrar Usuarios') ?>
                                     </li>
-                                   
+
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -119,7 +122,7 @@
                                     <li>
                                         <?php echo anchor('Admin/NewProducto', 'Nuevo Producto') ?>
                                     </li>
-                                    
+
                                 </ul>
                                 <!-- /.nav-second-level -->
                             </li>
@@ -127,10 +130,10 @@
                                 <a href=""><i class="fa fa-shopping-cart fa-shopping-cart"></i> Pedidos</a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                       <?php echo anchor('Admin/Pendientes', 'Mostrar pedidos pendientes') ?>
+                                        <?php echo anchor('Admin/Pendientes', 'Mostrar pedidos pendientes') ?>
                                     </li>
                                     <li>
-                                         <?php echo anchor('Admin/Enviados', 'Mostrar pedidos enviados') ?>
+                                        <?php echo anchor('Admin/Enviados', 'Mostrar pedidos enviados') ?>
                                     </li>
                                 </ul>
                                 <!-- /.nav-second-level -->
